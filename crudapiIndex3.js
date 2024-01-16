@@ -1,8 +1,17 @@
 import fs from "fs";
-const index = fs.readFileSync("index.html", "utf-8");
-const data = JSON.parse(fs.readFileSync("data.json", "utf-8"));
-const products = data.products;
+import path from "path";
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
+const __filename = fileURLToPath(import.meta.url);
+export const __dirname = dirname(__filename);
+
+const index = fs.readFileSync("index.html", "utf-8");
+const data = JSON.parse(
+  fs.readFileSync(path.resolve(__dirname, "data.json"), "utf-8")
+);
+const products = data.products;
 import express from "express";
 
 const server = express();
@@ -13,7 +22,7 @@ const getAllProducts = (req, res) => {
 };
 const getProductsById = (req, res) => {
   const id = req.params.id;
-  const product = products.find(p=>p.id === +id);
+  const product = products.find((p) => p.id === +id);
   res.json(product);
 };
 const PostProducts = (req, res) => {

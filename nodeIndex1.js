@@ -1,8 +1,16 @@
 import http from "http";
 import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+export const __dirname = dirname(__filename);
 
 const index = fs.readFileSync("index.html", "utf-8");
-const data = JSON.parse(fs.readFileSync("data.json", "utf-8"));
+const data = JSON.parse(
+  fs.readFileSync(path.resolve(__dirname, "data.json"), "utf-8")
+);
 const product = data.products;
 const server = http.createServer((req, res) => {
   if (req.url.startsWith("/product")) {
